@@ -1,0 +1,38 @@
+-----
+random_traces/lennert
+-----
+
+### LINUX ###
+
+CHROME:
+Min ovpn data size: 36
+Max ovpn data size: 1321
+Most frequent items: [(72, 'Count: 5034 = 34.87%'), (81, 'Count: 2762 = 19.13%'), (60, 'Count: 1818 = 12.59%')]
+
+EDGE:
+Min ovpn data size: 60
+Max ovpn data size: 1321
+Most frequent items: [(72, 'Count: 7633 = 51.92%'), (60, 'Count: 1556 = 10.58%'), (81, 'Count: 1273 = 8.66%')]
+
+FIREFOX:
+Min ovpn data size: 60
+Max ovpn data size: 1405
+Most frequent items: [(72, 'Count: 2395 = 26.9%'), (81, 'Count: 1559 = 17.51%'), (60, 'Count: 663 = 7.45%')]
+
+### WINDOWS ###
+
+CHROME:
+Min ovpn data size: 60
+Max ovpn data size: 1321
+Most frequent items: [(60, 'Count: 6630 = 39.77%'), (81, 'Count: 3210 = 19.25%'), (72, 'Count: 960 = 5.76%')]
+
+EDGE:
+Min ovpn data size: 52
+Max ovpn data size: 1321
+Most frequent items: [(60, 'Count: 7404 = 52.76%'), (81, 'Count: 2185 = 15.57%'), (1321, 'Count: 409 = 2.91%')]
+
+FIREFOX:
+Min ovpn data size: 36
+Max ovpn data size: 1405
+Most frequent items: [(60, 'Count: 13860 = 45.25%'), (81, 'Count: 2461 = 8.03%'), (72, 'Count: 1205 = 3.93%')]
+

@@ -1,0 +1,12 @@
+chrome:
+Min ovpn data size: 60
+Max ovpn data size: 1349
+Most frequent items: [(81, 'Count: 1537 = 18.11%'), (60, 'Count: 1099 = 12.95%'), (83, 'Count: 303 = 3.57%')]
+
+firefox:
+Min ovpn data size: 60
+Max ovpn data size: 1405
+Most frequent items: [(81, 'Count: 1483 = 22.52%'), (60, 'Count: 739 = 11.22%'), (1405, 'Count: 602 = 9.14%')]
+
+
+Beide windows.

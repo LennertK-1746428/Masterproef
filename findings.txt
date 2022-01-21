@@ -1,0 +1,50 @@
+### LINUX ### 
+
+- Browsing
+    --> all 60 72
+- Streaming
+    --> chrome edge 72 -60
+    --> firefox     81 -60
+
+### WINDOWS ###
+
+- Browsing
+    --> all 60 72
+- Streaming
+    --> chrome edge 60 81
+    --> firefox     81 -60
+
+############# 
+
+- firefox is duidelijk anders 
+    --> max size 1405 uniek --> de grotere packets in plain zijn QUIC
+    --> most frequent packet size 81 uniek bij streaming
+    --> streaming --> minder packets
+    --> browsing --> meer packets
+- linux vs windows
+    --> streaming anders
+    --> plain naar VPN
+        --> windows + 52 bytes
+        --> linux   + 66 bytes
+
+###############
+
+WINDOWS
+plain --> full ovpn packet = + 52 bytes (1315 --> 1367)
+plain --> ovpn data = + 6 bytes (1315 --> 1321)
+
+LINUX 
+plain --> full ovpn packet = + 66 bytes (1301 --> 1367)
+plain --> ovpn data = + 20 bytes (1301 --> 1321)
+
+
+#####################
+
+IMPORTANT PACKET SIZES
+
+60 --> TCP ACK
+61 --> TCP KEEP ALIVE ACK
+72 --> TCP ACK with 12B OPTIONS (NOP NOP timestamp)
+80 --> TCP ACK with 20B OPTIONS (NOP NOP SACK)
+81 - 82 - 83 - .. --> QUIC
+577 - 589 --> TLS CLIENT HELLO --> webpage request

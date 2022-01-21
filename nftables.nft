@@ -1,0 +1,11 @@
+#!/usr/sbin/nft -f
+
+add table inet my_table
+
+add chain inet my_table output_chain {type filter hook output priority 0; }
+
+add rule inet my_table output_chain meta length 1353 counter
+
+add rule inet my_table output_chain meta length 1353 numgen inc mod 3 < 1 drop # 10 map { 0 : drop, 1-9 : accept }
+
+
