@@ -48,3 +48,38 @@ IMPORTANT PACKET SIZES
 80 --> TCP ACK with 20B OPTIONS (NOP NOP SACK)
 81 - 82 - 83 - .. --> QUIC
 577 - 589 --> TLS CLIENT HELLO --> webpage request
+
+#####################
+TLS CLIENT HELLO
+
+- linux chrome: 569 (557 + 12 TCP OPTIONS) 557 450 
+- linux edge: 557 569    
+- linux firefox: 569 557 
+
+- windows chrome: 571 (557 + 14) 
+- windows edge: 571 250 
+- windows firefox: 571 
+
+Windows en linux hebben dezelfde TLS HANDSHAKE PACKET size
+	--> wss toevallig want linux heeft 1 ciphersuite meer (2B) maar windows heeft 1 extension meer (2B)
+linux openvpn3 client verpakt de packets NIET met een ethernet header (stuurt het IP packet dus), Windows verpakt WEL in ethernet header --> eth header = static 14B --> windows packets typisch 14B meer 
+	--> hierdoor zie je een verschil in sizes tussen windows en linux in vpn traces
+TLS PADDING EXTENSION (https://datatracker.ietf.org/doc/html/rfc7685)
+	--> increase length to at least 512 
+"Unfortunately, there are TLS servers that refuse (and hang upon) ClientHello messages of sizes in the range 256-512 bytes, causing TLS handshake timeouts. 
+RFC 7685 lets clients mitigate this by adding padding bytes to the ClientHello messages, so clients can adjust the ClientHello sizes at will as a workaround."
+	--> https://github.com/golang/go/issues/39271 
+
+TLS CLIENT HELLO PACKET
+-----------------------
+16B header (handshake, version, length of remainder of packet)
+1B type (client hello)
+3B length of remainder
+2B version
+32B random value 
+1B Session ID
+2B cipher suite info byte length
+	--> cipher suites indicate which key-negotiation, encryption and MAC algorithms the client understands
+1B #Compression mechanisms
+1B 0 --> compression is not used but must be specified for packet to be valid 
+?B extensions
