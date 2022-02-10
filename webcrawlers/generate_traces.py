@@ -48,7 +48,7 @@ if OS == "windows":
     edgedriverpath += ".exe"
     firefoxdriverpath += ".exe"
 
-OUTPUT_DIR = os.path.join(os.getcwd(), OS + "/traces/browsing_fons")
+OUTPUT_DIR = os.path.join(os.getcwd(), OS + "/traces/streaming_HTTP")
 
 # You cannot directly filter OpenVPN protocols while capturing. However, if you know the UDP or TCP port used (see above), you can filter on that one.
 FILTER = f"src host {IP} and udp port 1194"  
@@ -58,10 +58,11 @@ FILTER = f"src host {IP} and udp port 1194"
 #####################
 
 def flush_dns():
-    if OS == "linux":
-        subprocess.run(["systemd-resolve", "--flush-caches"])
-    elif OS == "windows":
-        subprocess.run(["ipconfig", "/flushdns"])
+    pass 
+    # if OS == "linux":
+    #     subprocess.run(["systemd-resolve", "--flush-caches"])
+    # elif OS == "windows":
+    #     subprocess.run(["ipconfig", "/flushdns"])
 
 
 # Firefox

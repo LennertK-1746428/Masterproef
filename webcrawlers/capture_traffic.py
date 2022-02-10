@@ -31,8 +31,8 @@ def browsing_traffic(driver, iface, filter, output_file):
         time.sleep(1)
 
 
-def streaming_traffic(driver, iface, filter, output_file):
-    """ Generate streaming traffic """
+def streaming_quic_traffic(driver, iface, filter, output_file):
+    """ Generate streaming QUIC traffic (YouTube) """
 
     # open streaming link
     driver.get("https://youtu.be/dQw4w9WgXcQ")  
@@ -51,13 +51,31 @@ def streaming_traffic(driver, iface, filter, output_file):
         time.sleep(1)
 
 
-def capture_traffic(driver, iface, filter, output_file, browsing=False, streaming=False):
+def streaming_http_traffic(driver, iface, filter, output_file):
+    """ Generate streaming HTTP traffic (Twitch) """
+
+    # open streaming link
+    driver.get("https://youtu.be/dQw4w9WgXcQ")  
+    time.sleep(10)   # make sure streaming has already begun
+    
+    # start capturing when already streaming
+    capture_process = subprocess.Popen(args=["tshark", "-i", iface, "-w", output_file, "-f", filter])
+
+    # capture streaming
+    time.sleep(STREAMING_INTERVAL)
+
+    # terminate capturing
+    capture_process.terminate()
+    while capture_process.poll() is None: # while process alive
+        print("tshark not terminated yet..")
+        time.sleep(1)
+def capture_traffic(driver, iface, filter, output_file, browsing=False, streaming_quic=False, streaming_http=False):
     """ Handle the actions to generate traffic """
 
     # do actions
     if browsing:
         browsing_traffic(driver, iface, filter, output_file)
-    elif streaming:
-        streaming_traffic(driver, iface, filter, output_file)
+    elif streaming_quic:
+        streaming_quic_traffic(driver, iface, filter, output_file)
 
         

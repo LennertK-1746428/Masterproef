@@ -7,7 +7,7 @@ from capture_config import *
 filter = f"src host {IP} and udp port {SERVER_PORT}"  
 
 # determine output files
-outfile = os.path.join(os.getcwd(), f"traces/file_upload/{OS}_{BROWSER}.pcapng")
+outfile = os.path.join(os.getcwd(), f"{BROWSER}.pcapng")
 
 # start capturing
 capture = subprocess.Popen(args=["tshark", "-i", IFACE, "-w", outfile, "-f", filter])

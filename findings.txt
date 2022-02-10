@@ -40,16 +40,25 @@ plain --> ovpn data = + 20 bytes (1301 --> 1321)
 
 #####################
 
-IMPORTANT PACKET SIZES
+IMPORTANT OPENVPN PACKET SIZES
 
 60 --> TCP ACK
 61 --> TCP KEEP ALIVE ACK
-72 --> TCP ACK with 12B OPTIONS (NOP NOP timestamp)
-80 --> TCP ACK with 20B OPTIONS (NOP NOP SACK)
-81 - 82 - 83 - .. --> QUIC
+72 --> TCP ACK with 12B OPTIONS (NOP NOP timestamp) || TCP DUP ACK || TCP SYN
+80 --> QUIC || TCP ACK with 20B OPTIONS (NOP NOP SACK)
+81 --> TCP ACK with 1B PAYLOAD || QUIC streaming 
+82 - 83 --> QUIC streaming
+84 --> QUIC || TCP ACK with 24B OPTIONS (NOP NOP timestamps NOP NOP SACK)
+186 - 218 --> WINDOWS TLS CLIENT KEY EXCHANGE
+133 - 145 - 178 - 199 --> LINUX TLS CLIENT KEY EXCHANGE 
 577 - 589 --> TLS CLIENT HELLO --> webpage request
 
 #####################
+ssl.handshake.type == 1
+    --> client hello 
+ssl.handshake.type == 16
+    --> key exchange 
+
 TLS CLIENT HELLO
 
 - linux chrome: 569 (557 + 12 TCP OPTIONS) 557 450 
@@ -83,3 +92,8 @@ TLS CLIENT HELLO PACKET
 1B #Compression mechanisms
 1B 0 --> compression is not used but must be specified for packet to be valid 
 ?B extensions
+
+#####################"
+
+YouTube --> streaming over QUIC
+Twitch --> streaming over HTTP (HLS)
