@@ -1,0 +1,36 @@
+Checking ('linux_chrome_vpn_1.pcapng', 'linux_chrome_plain_1.pcapng')
+VPN length: 14437, plain length: 14436
+Differences: [(66, 'Count: 9892 = 68.52%'), (65, 'Count: 258 = 1.79%'), (67, 'Count: 221 = 1.53%')]
+PLain: [(52, 'Count: 5034 = 34.87%'), (61, 'Count: 2762 = 19.13%'), (40, 'Count: 1818 = 12.59%')]
+VPN:   [(118, 'Count: 5033 = 34.86%'), (127, 'Count: 2762 = 19.13%'), (106, 'Count: 1818 = 12.59%')]
+
+Checking ('linux_edge_vpn_1.pcapng', 'linux_edge_plain_1.pcapng')
+VPN length: 14702, plain length: 14702
+Differences: [(66, 'Count: 14702 = 100.0%')]
+Plain: [(52, 'Count: 7633 = 51.92%'), (40, 'Count: 1556 = 10.58%'), (61, 'Count: 1273 = 8.66%')]
+VPN:   [(118, 'Count: 7633 = 51.92%'), (106, 'Count: 1556 = 10.58%'), (127, 'Count: 1273 = 8.66%')]
+
+Checking ('linux_firefox_vpn_1.pcapng', 'linux_firefox_plain_1.pcapng')
+VPN length: 8903, plain length: 8881
+Differences: [(66, 'Count: 3366 = 37.9%'), (65, 'Count: 177 = 1.99%'), (57, 'Count: 168 = 1.89%')]
+Plain: [(52, 'Count: 2395 = 26.97%'), (61, 'Count: 1559 = 17.55%'), (40, 'Count: 663 = 7.47%')]
+VPN:   [(118, 'Count: 2384 = 26.84%'), (127, 'Count: 1559 = 17.55%'), (106, 'Count: 663 = 7.47%')]
+
+Checking ('windows_chrome_vpn_1.pcapng', 'windows_chrome_plain_1.pcapng')
+VPN length: 16671, plain length: 16683
+Differences: [(52, 'Count: 10313 = 61.86%'), (53, 'Count: 319 = 1.91%'), (51, 'Count: 192 = 1.15%')]
+Plain: [(54, 'Count: 6630 = 39.77%'), (75, 'Count: 3210 = 19.25%'), (66, 'Count: 960 = 5.76%')]
+VPN:  [(106, 'Count: 6630 = 39.77%'), (127, 'Count: 3210 = 19.25%'), (118, 'Count: 960 = 5.76%')]
+
+Checking ('windows_edge_vpn_1.pcapng', 'windows_edge_plain_1.pcapng')
+VPN length: 14038, plain length: 14037
+Differences: [(52, 'Count: 9111 = 64.91%'), (51, 'Count: 293 = 2.09%'), (53, 'Count: 264 = 1.88%')]
+Plain: [(54, 'Count: 7404 = 52.75%'), (75, 'Count: 2185 = 15.57%'), (1315, 'Count: 409 = 2.91%')]
+VPN:  [(106, 'Count: 7403 = 52.74%'), (127, 'Count: 2185 = 15.57%'), (1367, 'Count: 409 = 2.91%')]
+
+Checking ('windows_firefox_vpn_1.pcapng', 'windows_firefox_plain_1.pcapng')
+VPN length: 30630, plain length: 30598
+Differences: [(52, 'Count: 12638 = 41.3%'), (51, 'Count: 519 = 1.7%'), (53, 'Count: 417 = 1.36%')]
+Plain: [(54, 'Count: 13869 = 45.33%'), (75, 'Count: 2463 = 8.05%'), (66, 'Count: 1213 = 3.96%')]
+VPN:   [(106, 'Count: 13855 = 45.28%'), (127, 'Count: 2458 = 8.03%'), (118, 'Count: 1205 = 3.94%')]
+

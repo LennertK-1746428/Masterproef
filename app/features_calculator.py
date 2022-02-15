@@ -2,7 +2,7 @@ from tokenize import Special
 import pyshark
 import numpy as np
 from collections import Counter
-from app.config import SPECIAL_SIZES
+from config import SPECIAL_SIZES
 
 
 class FeaturesCalculator:
@@ -80,7 +80,7 @@ class FeaturesCalculator:
         self.ovpn_data_sizes = []
         self.timestamps = []
         fails = 0
-        for packet in self.capture: #._packets:
+        for packet in self.capture._packets:
             if not ('OPENVPN' in packet):
                 continue
             try:

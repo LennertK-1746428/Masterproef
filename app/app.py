@@ -79,7 +79,7 @@ def start():
 def stop():
     global RUNNING, start_button, stop_button, status_value_label
     stop_capture_thread()
-    RUNNING = True
+    RUNNING = False
     start_button["state"] = "normal"
     stop_button["state"] = "disabled"
     status_value_label["text"] = "Not Running"

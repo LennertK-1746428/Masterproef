@@ -41,9 +41,9 @@ def predict_traffic(insert_label, ip, iface, server_port, interval):
         len_captured = len([p for p in capture._packets])
         print(f"Finished sniffing.. {len_captured} packets captured")
 
-        # if somehow no packets captured 
-        if len_captured < 100:
-            insert_label(f"{start_time} - {stop_time} : Not enough traffic")
+        # if not enough traffic --> too idle to make predictions 
+        if len_captured < 500:
+            insert_label(f"{start_time} - {stop_time} || Too idle for predictions")
             continue
 
         # break if stop event set
@@ -57,6 +57,7 @@ def predict_traffic(insert_label, ip, iface, server_port, interval):
         
         # do predictions based on features
         prediction = predict(packets_per_min, min_size, max_size, occ_sizes, special_sizes)
-
+        print(occ_sizes)
+        
         # add prediction to GUI
-        insert_label(f"{start_time} - {stop_time} | {prediction}")
+        insert_label(f"{start_time} - {stop_time} || {prediction}")

@@ -23,18 +23,15 @@ SPECIAL_SIZES = {
 # Enums for classifications 
 class Traffic(Enum):
     BROWSING = "Browsing"
-    STREAMING_QUIC = "Streaming over QUIC"
-    STREAMING_HTTP = "Streaming over HTTP"
+    STREAMING_QUIC = "Streaming QUIC"
+    STREAMING_HTTP = "Streaming HTTP"
     UPLOAD = "Uploading"
-    UNKNOWN = "Unknown"
 
 class OperatingSystem(Enum):
     WINDOWS = "Windows"
     LINUX = "Linux"
-    UNKNOWN = "Unknown"
 
 class Browser(Enum):
-    FIREFOX = "Mozilla Firefox"
-    EDGE = "Microsoft Edge"
-    CHROME = "Google Chrome"
-    UNKNOWN = "Unknown"
+    FIREFOX = "Firefox"
+    EDGE = "Edge"
+    CHROME = "Chrome"
