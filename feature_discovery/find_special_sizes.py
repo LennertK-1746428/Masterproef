@@ -1,5 +1,5 @@
 import os
-from classes.features_calculator import FeaturesCalculator
+from app.features_calculator import FeaturesCalculator
 
 OUT_FILE = open("features_special_sizes_detection__.txt", "w")
 all_traces_dirs = ["webcrawlers/linux/traces/browsing", "webcrawlers/linux/traces/streaming", "webcrawlers/windows/traces/browsing", "webcrawlers/windows/traces/streaming"] # ["android/traces", "linux/traces/browsing", "linux/traces/streaming", "windows/traces/browsing", "windows/traces/streaming"]
