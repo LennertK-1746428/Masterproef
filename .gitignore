@@ -131,3 +131,4 @@ dmypy.json
 # My own addings
 node_modules
 random_traces/traces
+noisy/output

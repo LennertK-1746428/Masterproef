@@ -330,7 +330,7 @@ def main():
 
     # Capture
     filter = "udp port 1194"
-    capture_process = subprocess.Popen(args=["tshark", "-i", args.interface, "-w", f"{args.os}-{args.browser}-browsing-{int(time.time)}.pcapng", "-f", filter])
+    capture_process = subprocess.Popen(args=["tshark", "-i", args.interface, "-w", f"output/{args.os}-{args.browser}-browsing-{int(time.time())}.pcapng", "-f", filter])
     while capture_process.poll() is not None: # while process not alive yet
         print("tshark not started yet..")
 
@@ -343,6 +343,7 @@ def main():
         print("tshark not terminated yet..")
         time.sleep(1)
     driver.quit()
+
 
 if __name__ == '__main__':
     main()
