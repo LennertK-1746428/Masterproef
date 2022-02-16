@@ -69,6 +69,8 @@ def streaming_http_traffic(driver, iface, filter, output_file):
     while capture_process.poll() is None: # while process alive
         print("tshark not terminated yet..")
         time.sleep(1)
+
+        
 def capture_traffic(driver, iface, filter, output_file, browsing=False, streaming_quic=False, streaming_http=False):
     """ Handle the actions to generate traffic """
 
