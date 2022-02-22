@@ -48,7 +48,7 @@ if OS == "windows":
     edgedriverpath += ".exe"
     firefoxdriverpath += ".exe"
 
-OUTPUT_DIR = os.path.join(os.getcwd(), OS + "/traces")
+OUTPUT_DIR = os.path.join(os.getcwd(), OS + "/traces/streaming_http")
 
 # You cannot directly filter OpenVPN protocols while capturing. However, if you know the UDP or TCP port used (see above), you can filter on that one.
 FILTER = f"src host {IPv4} and udp port 1194"  
@@ -76,7 +76,7 @@ for i in range(3):
     driver = webdriver.Firefox(options=options, service=service)
     # capture traffic
     output_file = os.path.join(OUTPUT_DIR, "firefox" + str(i+1) + ".pcapng")
-    capture_traffic(driver, INTERFACE, FILTER, output_file, streaming_quic=True)
+    capture_traffic(driver, INTERFACE, FILTER, output_file, streaming_http=True)
     driver.quit()
 
 # Chrome
@@ -90,7 +90,7 @@ for i in range(3):
     driver = webdriver.Chrome(options=options, service=service)
     # capture traffic
     output_file = os.path.join(OUTPUT_DIR, "chrome" + str(i+1) + ".pcapng")
-    capture_traffic(driver, INTERFACE, FILTER, output_file, streaming_quic=True)
+    capture_traffic(driver, INTERFACE, FILTER, output_file, streaming_http=True)
     driver.quit()
 
 # Edge
@@ -106,5 +106,5 @@ for i in range(3):
     driver = webdriver.Edge(options=options, service=service)
     # capture traffic
     output_file = os.path.join(OUTPUT_DIR, "edge" + str(i+1) + ".pcapng")
-    capture_traffic(driver, INTERFACE, FILTER, output_file, streaming_quic=True)
+    capture_traffic(driver, INTERFACE, FILTER, output_file, streaming_http=True)
     driver.quit()

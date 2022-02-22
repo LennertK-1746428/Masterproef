@@ -105,5 +105,5 @@ for filename in sorted(filenames):
     visualize_trace(filePath, outPath)
 
 plt.suptitle("Comparison")
-plt.savefig(os.path.join(out_dir, "streaming_firefox_chrome_edge_1500x1500_5.png"))
+plt.savefig(os.path.join(out_dir, f"{DIR}_firefox_chrome_edge_1500x1500_5.png"))
 # plt.show()
