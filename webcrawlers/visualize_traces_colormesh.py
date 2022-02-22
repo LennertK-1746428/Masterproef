@@ -95,6 +95,7 @@ plt.figure(figsize=(24,18))
 # visualize every trace file 
 filenames = os.listdir(traces_dir)
 print(filenames)
+filenames.append("chrome2.pcapng")
 
 for filename in sorted(filenames):
     print(f"Handling {filename}")
