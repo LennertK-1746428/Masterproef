@@ -295,10 +295,10 @@ def get_driver(args):
         firefoxdriverpath = os.path.join(os.pardir, f"webcrawlers/{args.os}/webdrivers", "geckodriver")
         if args.os == "windows":
             firefoxdriverpath += ".exe"
-        service = FirefoxService(chromedriverpath)
+        service = FirefoxService(firefoxdriverpath)
         options = FirefoxOptions()
         options.add_argument("start-maximized")
-        options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications": 2}) 
+        # options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications": 2}) 
         # options.headless = True # do not open browser GUI
         driver = webdriver.Firefox(options=options, service=service)
 

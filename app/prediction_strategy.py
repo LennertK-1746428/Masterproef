@@ -1,4 +1,3 @@
-from urllib.request import parse_keqv_list
 from config import *
 
 def predict_strategy_1_OUTDATED(packet_count, min_size, max_size, occ_size):
