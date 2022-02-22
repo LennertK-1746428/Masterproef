@@ -2,15 +2,15 @@ import subprocess
 import os
 
 # specify interfaces
-VPN_IFACE = "Local Area Connection"
-REGULAR_IFACE = "WiFi"
+VPN_IFACE = "tun0" # "Local Area Connection"
+REGULAR_IFACE = "wlp0s20f3" # "WiFi"
 
 # get IPs
-VPN_IP = "10.99.98.40"
+VPN_IP = "10.99.98.44"
 VPN_IPv6 = "2a02:1810:9c0e:f000:4::" 
 REGULAR_IP = "192.168.0.145"
 
-# determine filterS
+# determine filterS 
 vpn_filter = f"src host {REGULAR_IP} and udp port 1194"  
 plain_filter = f"src host {VPN_IP} or src host {VPN_IPv6}"
 

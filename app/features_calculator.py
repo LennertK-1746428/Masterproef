@@ -64,7 +64,11 @@ class FeaturesCalculator:
         # for every special size, count occurrence attributes and add to stats dictionary 
         for size, packet_type in SPECIAL_SIZES.items():
             occ = occurrence_counts[size] + occurrence_counts[size + 20]  # IPv6 header is exactly 20B more
-            stats[packet_type] = (self.__normalize_count(occ), self.__percentage(occ, length))
+
+            if packet_type in stats:
+                stats[packet_type] = (stats[packet_type][0] + self.__normalize_count(occ), stats[packet_type][1] + self.__percentage(occ, length))
+            else:
+                stats[packet_type] = (self.__normalize_count(occ), self.__percentage(occ, length))
            
         return stats 
 
@@ -166,6 +170,6 @@ class FeaturesCalculator:
             worksheet.write(row, col, item[2]); col += 1
         for (key, val) in special_sizes.items():
             col += 1
-            worksheet.write(row, col, key); col += 1
+            worksheet.write(row, col, key.value); col += 1
             worksheet.write(row, col, val[1]); col += 1
             worksheet.write(row, col, val[0]); col += 1

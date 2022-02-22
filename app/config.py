@@ -20,12 +20,12 @@ SPECIAL_SIZES = {
     81: PacketTypes.QUIC,
     82: PacketTypes.QUIC,
     83: PacketTypes.QUIC,
-    133: PacketTypes.TLS_KEY_EXCHANGE,
-    145: PacketTypes.TLS_KEY_EXCHANGE,
-    178: PacketTypes.TLS_KEY_EXCHANGE,
-    199: PacketTypes.TLS_KEY_EXCHANGE,
+    # 133: PacketTypes.TLS_KEY_EXCHANGE,
+    # 145: PacketTypes.TLS_KEY_EXCHANGE,
+    # 178: PacketTypes.TLS_KEY_EXCHANGE,
+    # 199: PacketTypes.TLS_KEY_EXCHANGE,
     186: PacketTypes.TLS_KEY_EXCHANGE,
-    218: PacketTypes.TLS_KEY_EXCHANGE,
+    # 218: PacketTypes.TLS_KEY_EXCHANGE,
     577: PacketTypes.TLS_CLIENT_HELLO,
     589: PacketTypes.TLS_CLIENT_HELLO_OPTIONS
 }

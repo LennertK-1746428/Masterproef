@@ -1,0 +1,17 @@
+frozenset({72, 92}) : linux, 14x
+frozenset({80, 72, 92}) : linux, 9x
+101 : streaming_quic, 18x
+103 : streaming_quic, 6x
+103 : chrome, 6x
+104 : streaming_quic, 9x
+frozenset({101, 103}) : streaming_quic, 6x
+frozenset({101, 103}) : chrome, 6x
+frozenset({104, 101}) : streaming_quic, 9x
+frozenset({104, 103}) : streaming_quic, 6x
+frozenset({104, 103}) : chrome, 6x
+frozenset({104, 101, 103}) : streaming_quic, 6x
+frozenset({104, 101, 103}) : chrome, 6x
+frozenset({1321, 60}) : browsing, 6x
+frozenset({1321, 60}) : windows, 6x
+frozenset({80, 1321, 60}) : browsing, 6x
+frozenset({80, 1321, 60}) : windows, 6x

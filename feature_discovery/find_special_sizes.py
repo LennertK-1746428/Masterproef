@@ -20,7 +20,7 @@ for traces_dir in all_traces_dirs:
         filePath = os.path.join(files_dir, f)
 
         calc = FeaturesCalculator(trace=filePath)
-        packet_count, min_size, max_size, occ_size = calc.calc_and_return_features()
+        packet_count, min_size, max_size, occ_size, _ = calc.return_features()
 
         # single items
         for occ_tuple in occ_size:
@@ -70,13 +70,13 @@ def check_unique(key, vals, options):
             unique = False
             break
     
-    if unique and len(vals) >= 2:
+    if unique and len(vals) >= 6:
         OUT_FILE.write(f"{key} : {temp}, {len(vals)}x\n" )
 
 
 for key,vals in sizes_dict.items():
     vals = remove_dup(vals)
-    check_unique(key, vals, ["browsing", "streaming"])      # traffic
+    check_unique(key, vals, ["browsing", "streaming_http", "streaming_quic"])      # traffic
     check_unique(key, vals, ["firefox", "edge", "chrome"])  # browser
     check_unique(key, vals, ["windows", "linux"])      # os
 

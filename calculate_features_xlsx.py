@@ -3,7 +3,7 @@ import xlsxwriter
 from app.features_calculator import FeaturesCalculator
 
 # init Excel sheet
-workbook = xlsxwriter.Workbook('features_webcrawlers_twitch.xlsx')
+workbook = xlsxwriter.Workbook('features_webcrawlers.xlsx')
 worksheet = workbook.add_worksheet("Features")
 worksheet.write(0, 0, "Name")
 worksheet.write(0, 2, "Packets/m")
@@ -12,7 +12,7 @@ worksheet.write(0, 4, "Max")
 worksheet.write(0, 6, "Top 3 occurrences: size - percentage")
 worksheet.write(0, 13, "Special sizes: size - percentage - count")
 
-all_traces_dirs = ["webcrawlers/linux/traces/browsing", "webcrawlers/linux/traces/streaming", "webcrawlers/windows/traces/browsing", "webcrawlers/windows/traces/streaming", "random_traces/traces/streaming_twitch", "random_traces/traces/streaming_yt"] # ["android/traces", "linux/traces/browsing", "linux/traces/streaming", "windows/traces/browsing", "windows/traces/streaming"]# ["random_traces/traces/browsing", "random_traces/traces/streaming"]#["webcrawlers/linux/traces/browsing", "webcrawlers/linux/traces/streaming", "webcrawlers/windows/traces/browsing", "webcrawlers/windows/traces/streaming"] # ["android/traces", "linux/traces/browsing", "linux/traces/streaming", "windows/traces/browsing", "windows/traces/streaming"]
+all_traces_dirs = ["webcrawlers/linux/traces/browsing", "webcrawlers/linux/traces/streaming_quic", "webcrawlers/linux/traces/streaming_http", "webcrawlers/windows/traces/browsing", "webcrawlers/windows/traces/streaming_quic", "webcrawlers/windows/traces/streaming_http"] # ["android/traces", "linux/traces/browsing", "linux/traces/streaming", "windows/traces/browsing", "windows/traces/streaming"]
 all_traces_dirs.sort()
 
 row = 1
