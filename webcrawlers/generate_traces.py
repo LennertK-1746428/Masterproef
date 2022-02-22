@@ -30,7 +30,7 @@ from capture_traffic import capture_traffic
 
 try:
     OS = sys.argv[1] # "windows", "linux"
-    IP = sys.argv[2] 
+    IPv4 = sys.argv[2] 
     INTERFACE = sys.argv[3]
 except:
     print("Specify 3 arguments: [1] = OS, [2] = IPv4, [3] = Interface")
@@ -48,10 +48,10 @@ if OS == "windows":
     edgedriverpath += ".exe"
     firefoxdriverpath += ".exe"
 
-OUTPUT_DIR = os.path.join(os.getcwd(), OS + "/traces/streaming_HTTP")
+OUTPUT_DIR = os.path.join(os.getcwd(), OS + "/traces")
 
 # You cannot directly filter OpenVPN protocols while capturing. However, if you know the UDP or TCP port used (see above), you can filter on that one.
-FILTER = f"src host {IP} and udp port 1194"  
+FILTER = f"src host {IPv4} and udp port 1194"  
 
 #####################
 # Generating traces #
@@ -66,21 +66,21 @@ def flush_dns():
 
 
 # Firefox
-for i in range(0):
+for i in range(3):
     # flush dns
     flush_dns()
     # init driver
     service = FirefoxService(firefoxdriverpath)
     options = FirefoxOptions()
-    options.headless = True # do not open browser GUI
+    #options.headless = True # do not open browser GUI
     driver = webdriver.Firefox(options=options, service=service)
     # capture traffic
     output_file = os.path.join(OUTPUT_DIR, "firefox" + str(i+1) + ".pcapng")
-    capture_traffic(driver, INTERFACE, FILTER, output_file, browsing=True)
+    capture_traffic(driver, INTERFACE, FILTER, output_file, streaming_quic=True)
     driver.quit()
 
 # Chrome
-for i in range(0):
+for i in range(3):
     # flush dns
     flush_dns()
     # init driver   
@@ -90,7 +90,7 @@ for i in range(0):
     driver = webdriver.Chrome(options=options, service=service)
     # capture traffic
     output_file = os.path.join(OUTPUT_DIR, "chrome" + str(i+1) + ".pcapng")
-    capture_traffic(driver, INTERFACE, FILTER, output_file, browsing=True)
+    capture_traffic(driver, INTERFACE, FILTER, output_file, streaming_quic=True)
     driver.quit()
 
 # Edge
@@ -102,9 +102,9 @@ for i in range(3):
     options = EdgeOptions()
     if OS == "windows":
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    options.headless = True # do not open browser GUI
+    #options.headless = True # do not open browser GUI
     driver = webdriver.Edge(options=options, service=service)
     # capture traffic
     output_file = os.path.join(OUTPUT_DIR, "edge" + str(i+1) + ".pcapng")
-    capture_traffic(driver, INTERFACE, FILTER, output_file, browsing=True)
+    capture_traffic(driver, INTERFACE, FILTER, output_file, streaming_quic=True)
     driver.quit()

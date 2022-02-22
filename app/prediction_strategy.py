@@ -97,52 +97,54 @@ def predict_traffic(packets_per_min, min_size, max_size, occ_sizes, special_size
     #######
 
     # TLS CLIENT HELLO 589 or 577 --> Browsing, else Streaming
-    if special_sizes[589][1] >= 0.5 or special_sizes[589][0] >= 40:
-        print("589: occurs --> Browsing")
+    if special_sizes[PacketTypes.TLS_CLIENT_HELLO_OPTIONS][1] >= 0.5 or special_sizes[PacketTypes.TLS_CLIENT_HELLO_OPTIONS][0] >= 40:
+        if __debug__: print("589: occurs --> Browsing")
         scores[Traffic.BROWSING] += 1
-    elif special_sizes[577][1] >= 0.5 or special_sizes[577][0] >= 40:
-        print("577: occurs --> Browsing")
+    elif special_sizes[PacketTypes.TLS_CLIENT_HELLO][1] >= 0.5 or special_sizes[PacketTypes.TLS_CLIENT_HELLO][0] >= 40:
+        if __debug__: print("577: occurs --> Browsing")
         scores[Traffic.BROWSING] += 1
-    elif special_sizes[577][1] <= 0.2:
-        print("Neither 577 nor 589 --> Streaming")
+    elif special_sizes[PacketTypes.TLS_CLIENT_HELLO][1] <= 0.2:
+        if __debug__: print("Neither 577 nor 589 --> Streaming")
         scores[Traffic.STREAMING_QUIC] += 1
         scores[Traffic.STREAMING_HTTP] += 1
 
     # TLS KEY EXCHANGE --> Browsing (Windows)
-    if special_sizes[186][1] >= 0.2:
-        print("186: occurs --> Browsing")
-        scores[Traffic.BROWSING] += 1
+    # if special_sizes[186][1] >= 0.2:
+    #     print("186: occurs --> Browsing")
+    #     scores[Traffic.BROWSING] += 1
 
     #########################
     # Packet Size Frequency #
     #########################
 
     # Top 2 of 60,72 --> strong indication Browsing or Streaming over HTTP
-    if set([60,72]) == top_2_set:
+    if (60 in top_2_set or 80 in top_2_set) and (72 in top_2_set or 92 in top_2_set):
         scores[Traffic.BROWSING] += 1
         scores[Traffic.STREAMING_HTTP] += 1
 
         # Difference between HTTP streaming and browsing is hard to notice in the amount of ACKs, but streaming over HTTP 
         # should not produce as many TLS client hello's as browsing 
         if packets_per_min >= 20000:
-            print("60, 72, packets>20k: Streaming HTTP")
+            if __debug__: print("60, 72, packets>20k: Streaming HTTP")
             scores[Traffic.STREAMING_HTTP] += 1
         else:
-            print("60, 72, packets<20k: Browsing")
+            if __debug__: print("60, 72, packets<20k: Browsing")
             scores[Traffic.BROWSING] += 1
 
     # 81 or 83 in top 2 --> strong indication Streaming over QUIC
-    if 81 in top_2_set or 83 in top_2_set: # or special_sizes[81][1] >= 6:
-        print("81 or 83: in top 2 --> Streaming QUIC")
+    if get_packet_type(occ_sizes[0][0]) == PacketTypes.QUIC or get_packet_type(occ_sizes[1][0]) == PacketTypes.QUIC: # or special_sizes[81][1] >= 6:
+        if __debug__: print("81 or 83: in top 2 --> Streaming QUIC")
         scores[Traffic.STREAMING_QUIC] += 1
 
     # if result is Streaming, look for ACKs
     result = process_scores(scores)
     if result == "Streaming":
         # ACKs make up at least 80% --> HTTP, else QUIC
-        if special_sizes[60][1] + special_sizes[72][1] >= 80:
+        if special_sizes[PacketTypes.TCP_ACK][1] + special_sizes[PacketTypes.TCP_ACK_OPTIONS][1] >= 80:
+            if __debug__: print("Streaming, lots of ACKs --> HTTP")
             result = Traffic.STREAMING_HTTP.value
         else:
+            if __debug__: print("Streaming, not enough ACKs --> QUIC")
             result = Traffic.STREAMING_QUIC.value 
 
     return f"Traffic: {result}"
@@ -156,33 +158,25 @@ def predict_OS(packets_per_min, min_size, max_size, occ_sizes, special_sizes):
     #######
 
     # More than 0.01% TLS CLIENT HELLO 589 --> Linux, else Windows
-    if special_sizes[589][1] > 0.01 or special_sizes[589][0] >= 40:
-        print("589: occurs --> Linux")
+    if special_sizes[PacketTypes.TLS_CLIENT_HELLO_OPTIONS][1] > 0.01 or special_sizes[PacketTypes.TLS_CLIENT_HELLO_OPTIONS][0] >= 40:
+        if __debug__: print("589: occurs --> Linux")
         scores[OperatingSystem.LINUX] += 1
-    elif special_sizes[577][1] >= 0.5 or special_sizes[577][0] >= 40:
-        print("589: does not occur but 577 does --> Windows")
+    elif special_sizes[PacketTypes.TLS_CLIENT_HELLO][1] >= 0.5 or special_sizes[PacketTypes.TLS_CLIENT_HELLO][0] >= 40:
+        if __debug__: print("589: does not occur but 577 does --> Windows")
         scores[OperatingSystem.WINDOWS] += 1
-    
-    # More than 0.8% TLS CLIENT HELLO 577 --> Windows (Browsing), if present but less --> Linux (Browsing)
-    # if special_sizes[577][1] >= 0.8:
-    #     print("577: occurs a lot --> Windows")
-    #     scores[OperatingSystem.WINDOWS] += 1
-    # elif special_sizes[577][1] >= 0.25:
-    #     print("577: occurs a little bit --> Linux")
-    #     scores[OperatingSystem.LINUX] += 1
 
     # TLS KEY EXCHANGE --> Windows (Browsing)
-    if special_sizes[186][1] >= 0.2:
-        print("186: occurs a lot --> Windows")
-        scores[OperatingSystem.WINDOWS] += 1
+    # if special_sizes[186][1] >= 0.2:
+    #     print("186: occurs a lot --> Windows")
+    #     scores[OperatingSystem.WINDOWS] += 1
 
     #########################
     # Packet Size Frequency #
     #########################
 
     # Linux likes to send a lot of ACKs with 12B options 
-    if occ_sizes[0][0] == 72 or special_sizes[72][1] >= 40:
-        print("72: occurs a lot --> Linux")
+    if get_packet_type(occ_sizes[0][0]) == PacketTypes.TCP_ACK_OPTIONS or special_sizes[PacketTypes.TCP_ACK_OPTIONS][1] >= 40:
+        if __debug__: print("72: occurs a lot --> Linux")
         scores[OperatingSystem.LINUX] += 1
 
     return f"OS: {process_scores(scores)}"
@@ -211,8 +205,6 @@ def predict_browser(packets_per_min, min_size, max_size, occ_sizes, special_size
     ###################
     # Max Packet Size #
     ###################
-
-    print(f"Max size: {max_size}")
 
     # Only Firefox has max >= 1400 (1405) --> strong argument = +3
     if max_size >= 1400:

@@ -1,0 +1,228 @@
+-----
+webcrawlers/linux/traces/browsing
+-----
+chrome1.pcapng:
+Packet count: 1982
+Min ovpn data size: 60
+Max ovpn data size: 1398
+Most frequent items: [(60, 'Count: 1022 = 51.56%'), (72, 'Count: 401 = 20.23%'), (82, 'Count: 62 = 3.13%')]
+
+chrome2.pcapng:
+Packet count: 2149
+Min ovpn data size: 60
+Max ovpn data size: 1398
+Most frequent items: [(60, 'Count: 1157 = 53.84%'), (72, 'Count: 430 = 20.01%'), (82, 'Count: 76 = 3.54%')]
+
+chrome3.pcapng:
+Packet count: 2018
+Min ovpn data size: 60
+Max ovpn data size: 1398
+Most frequent items: [(60, 'Count: 1086 = 53.82%'), (72, 'Count: 358 = 17.74%'), (82, 'Count: 64 = 3.17%')]
+
+edge1.pcapng:
+Packet count: 2095
+Min ovpn data size: 60
+Max ovpn data size: 1298
+Most frequent items: [(60, 'Count: 1154 = 55.08%'), (72, 'Count: 386 = 18.42%'), (82, 'Count: 74 = 3.53%')]
+
+edge2.pcapng:
+Packet count: 2145
+Min ovpn data size: 60
+Max ovpn data size: 1298
+Most frequent items: [(60, 'Count: 1196 = 55.76%'), (72, 'Count: 375 = 17.48%'), (82, 'Count: 73 = 3.4%')]
+
+edge3.pcapng:
+Packet count: 2121
+Min ovpn data size: 60
+Max ovpn data size: 1298
+Most frequent items: [(60, 'Count: 1248 = 58.84%'), (72, 'Count: 329 = 15.51%'), (82, 'Count: 76 = 3.58%')]
+
+firefox1.pcapng:
+Packet count: 3815
+Min ovpn data size: 60
+Max ovpn data size: 1405
+Most frequent items: [(60, 'Count: 1532 = 40.16%'), (72, 'Count: 1408 = 36.91%'), (84, 'Count: 61 = 1.6%')]
+
+firefox2.pcapng:
+Packet count: 4387
+Min ovpn data size: 60
+Max ovpn data size: 1405
+Most frequent items: [(60, 'Count: 1810 = 41.26%'), (72, 'Count: 1342 = 30.59%'), (84, 'Count: 371 = 8.46%')]
+
+firefox3.pcapng:
+Packet count: 4379
+Min ovpn data size: 60
+Max ovpn data size: 1405
+Most frequent items: [(60, 'Count: 1890 = 43.16%'), (72, 'Count: 1520 = 34.71%'), (92, 'Count: 64 = 1.46%')]
+
+-----
+webcrawlers/linux/traces/streaming
+-----
+chrome1.pcapng:
+Packet count: 4966
+Min ovpn data size: 60
+Max ovpn data size: 1398
+Most frequent items: [(72, 'Count: 2157 = 43.44%'), (92, 'Count: 732 = 14.74%'), (84, 'Count: 646 = 13.01%')]
+
+chrome2.pcapng:
+Packet count: 4912
+Min ovpn data size: 72
+Max ovpn data size: 1398
+Most frequent items: [(72, 'Count: 2795 = 56.9%'), (84, 'Count: 553 = 11.26%'), (81, 'Count: 430 = 8.75%')]
+
+chrome3.pcapng:
+Packet count: 4283
+Min ovpn data size: 72
+Max ovpn data size: 1398
+Most frequent items: [(72, 'Count: 2486 = 58.04%'), (81, 'Count: 496 = 11.58%'), (84, 'Count: 392 = 9.15%')]
+
+edge1.pcapng:
+Packet count: 4824
+Min ovpn data size: 60
+Max ovpn data size: 1321
+Most frequent items: [(72, 'Count: 2258 = 46.81%'), (81, 'Count: 404 = 8.37%'), (60, 'Count: 244 = 5.06%')]
+
+edge2.pcapng:
+Packet count: 4490
+Min ovpn data size: 60
+Max ovpn data size: 1321
+Most frequent items: [(72, 'Count: 2333 = 51.96%'), (81, 'Count: 519 = 11.56%'), (84, 'Count: 277 = 6.17%')]
+
+edge3.pcapng:
+Packet count: 5142
+Min ovpn data size: 60
+Max ovpn data size: 1321
+Most frequent items: [(72, 'Count: 2887 = 56.15%'), (81, 'Count: 573 = 11.14%'), (84, 'Count: 363 = 7.06%')]
+
+firefox1.pcapng:
+Packet count: 1353
+Min ovpn data size: 72
+Max ovpn data size: 1405
+Most frequent items: [(81, 'Count: 746 = 55.14%'), (87, 'Count: 107 = 7.91%'), (84, 'Count: 63 = 4.66%')]
+
+firefox2.pcapng:
+Packet count: 1411
+Min ovpn data size: 72
+Max ovpn data size: 1405
+Most frequent items: [(81, 'Count: 567 = 40.18%'), (88, 'Count: 135 = 9.57%'), (82, 'Count: 98 = 6.95%')]
+
+firefox3.pcapng:
+Packet count: 1277
+Min ovpn data size: 72
+Max ovpn data size: 1405
+Most frequent items: [(81, 'Count: 425 = 33.28%'), (84, 'Count: 171 = 13.39%'), (88, 'Count: 110 = 8.61%')]
+
+-----
+webcrawlers/windows/traces/browsing
+-----
+chrome1.pcapng:
+Packet count: 1587
+Min ovpn data size: 60
+Max ovpn data size: 1398
+Most frequent items: [(60, 'Count: 836 = 52.68%'), (72, 'Count: 290 = 18.27%'), (82, 'Count: 68 = 4.28%')]
+
+chrome2.pcapng:
+Packet count: 1472
+Min ovpn data size: 60
+Max ovpn data size: 1398
+Most frequent items: [(60, 'Count: 799 = 54.28%'), (72, 'Count: 207 = 14.06%'), (82, 'Count: 80 = 5.43%')]
+
+chrome3.pcapng:
+Packet count: 1496
+Min ovpn data size: 60
+Max ovpn data size: 1398
+Most frequent items: [(60, 'Count: 779 = 52.07%'), (72, 'Count: 250 = 16.71%'), (82, 'Count: 78 = 5.21%')]
+
+edge1.pcapng:
+Packet count: 1691
+Min ovpn data size: 60
+Max ovpn data size: 1398
+Most frequent items: [(60, 'Count: 976 = 57.72%'), (72, 'Count: 215 = 12.71%'), (82, 'Count: 82 = 4.85%')]
+
+edge2.pcapng:
+Packet count: 1665
+Min ovpn data size: 60
+Max ovpn data size: 1398
+Most frequent items: [(60, 'Count: 858 = 51.53%'), (72, 'Count: 311 = 18.68%'), (82, 'Count: 72 = 4.32%')]
+
+edge3.pcapng:
+Packet count: 1519
+Min ovpn data size: 60
+Max ovpn data size: 1398
+Most frequent items: [(60, 'Count: 824 = 54.25%'), (72, 'Count: 231 = 15.21%'), (82, 'Count: 82 = 5.4%')]
+
+firefox1.pcapng:
+Packet count: 4035
+Min ovpn data size: 60
+Max ovpn data size: 1405
+Most frequent items: [(60, 'Count: 2306 = 57.15%'), (72, 'Count: 838 = 20.77%'), (80, 'Count: 112 = 2.78%')]
+
+firefox2.pcapng:
+Packet count: 3664
+Min ovpn data size: 60
+Max ovpn data size: 1405
+Most frequent items: [(60, 'Count: 2565 = 70.01%'), (72, 'Count: 332 = 9.06%'), (88, 'Count: 73 = 1.99%')]
+
+firefox3.pcapng:
+Packet count: 3928
+Min ovpn data size: 60
+Max ovpn data size: 1405
+Most frequent items: [(60, 'Count: 2550 = 64.92%'), (72, 'Count: 549 = 13.98%'), (80, 'Count: 83 = 2.11%')]
+
+-----
+webcrawlers/windows/traces/streaming
+-----
+chrome1.pcapng:
+Packet count: 1043
+Min ovpn data size: 60
+Max ovpn data size: 1398
+Most frequent items: [(81, 'Count: 365 = 35.0%'), (84, 'Count: 90 = 8.63%'), (83, 'Count: 72 = 6.9%')]
+
+chrome2.pcapng:
+Packet count: 3693
+Min ovpn data size: 60
+Max ovpn data size: 1398
+Most frequent items: [(60, 'Count: 2673 = 72.38%'), (81, 'Count: 399 = 10.8%'), (72, 'Count: 123 = 3.33%')]
+
+chrome3.pcapng:
+Packet count: 4184
+Min ovpn data size: 60
+Max ovpn data size: 1398
+Most frequent items: [(60, 'Count: 2356 = 56.31%'), (81, 'Count: 584 = 13.96%'), (72, 'Count: 487 = 11.64%')]
+
+edge1.pcapng:
+Packet count: 5322
+Min ovpn data size: 60
+Max ovpn data size: 1398
+Most frequent items: [(60, 'Count: 3881 = 72.92%'), (81, 'Count: 396 = 7.44%'), (83, 'Count: 79 = 1.48%')]
+
+edge2.pcapng:
+Packet count: 5778
+Min ovpn data size: 60
+Max ovpn data size: 1398
+Most frequent items: [(60, 'Count: 4048 = 70.06%'), (81, 'Count: 407 = 7.04%'), (72, 'Count: 152 = 2.63%')]
+
+edge3.pcapng:
+Packet count: 5402
+Min ovpn data size: 60
+Max ovpn data size: 1398
+Most frequent items: [(60, 'Count: 3693 = 68.36%'), (81, 'Count: 305 = 5.65%'), (72, 'Count: 265 = 4.91%')]
+
+firefox1.pcapng:
+Packet count: 1406
+Min ovpn data size: 60
+Max ovpn data size: 1405
+Most frequent items: [(81, 'Count: 696 = 49.5%'), (87, 'Count: 85 = 6.05%'), (85, 'Count: 74 = 5.26%')]
+
+firefox2.pcapng:
+Packet count: 1645
+Min ovpn data size: 60
+Max ovpn data size: 1405
+Most frequent items: [(81, 'Count: 867 = 52.71%'), (88, 'Count: 93 = 5.65%'), (90, 'Count: 90 = 5.47%')]
+
+firefox3.pcapng:
+Packet count: 1679
+Min ovpn data size: 60
+Max ovpn data size: 1405
+Most frequent items: [(81, 'Count: 537 = 31.98%'), (60, 'Count: 193 = 11.49%'), (85, 'Count: 117 = 6.97%')]
+

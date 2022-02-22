@@ -61,9 +61,10 @@ class FeaturesCalculator:
         length = len(self.ovpn_data_sizes)
         stats = {}
 
-        for size in SPECIAL_SIZES:
-            occ = occurrence_counts[size]
-            stats[size] = (self.__normalize_count(occ), self.__percentage(occ, length))
+        # for every special size, count occurrence attributes and add to stats dictionary 
+        for size, packet_type in SPECIAL_SIZES.items():
+            occ = occurrence_counts[size] + occurrence_counts[size + 20]  # IPv6 header is exactly 20B more
+            stats[packet_type] = (self.__normalize_count(occ), self.__percentage(occ, length))
            
         return stats 
 

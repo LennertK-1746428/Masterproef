@@ -13,7 +13,7 @@ try:
     OS = sys.argv[1] # "windows", "linux"
     DIR = sys.argv[2] 
 except:
-    print("Specify 2 arguments: [1] = OS, [2] = TRACES DIR")
+    print("Specify OS and DIR")
     exit(0)
 
 
@@ -95,6 +95,7 @@ plt.figure(figsize=(24,18))
 # visualize every trace file 
 filenames = os.listdir(traces_dir)
 print(filenames)
+
 for filename in sorted(filenames):
     print(f"Handling {filename}")
     # get paths
@@ -104,5 +105,5 @@ for filename in sorted(filenames):
     visualize_trace(filePath, outPath)
 
 plt.suptitle("Comparison")
-plt.savefig(os.path.join(out_dir, DIR + "_FONS_firefox_chrome_edge_1500x1500_5.png"))
+plt.savefig(os.path.join(out_dir, "streaming_firefox_chrome_edge_1500x1500_5.png"))
 # plt.show()

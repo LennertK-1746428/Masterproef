@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.font as tkFont
 import threading
-from predictor import *
+from predictor_thread import *
 from config import *
 import socket
 hostname = socket.gethostname()
