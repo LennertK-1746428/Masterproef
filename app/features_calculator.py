@@ -2,7 +2,7 @@ from tokenize import Special
 import pyshark
 import numpy as np
 from collections import Counter
-from config import SPECIAL_SIZES
+from app.config import SPECIAL_SIZES
 
 
 class FeaturesCalculator:
@@ -15,6 +15,7 @@ class FeaturesCalculator:
         self.ovpn_data_sizes = []
         self.timestamps = []
         self.ia_times = []
+        self.ttl = []
         self.duration_minutes = float(0)
     
     
@@ -85,13 +86,14 @@ class FeaturesCalculator:
         self.ovpn_data_sizes = []
         self.timestamps = []
         fails = 0
-        for packet in self.capture._packets:
+        for packet in self.capture: #._packets:
             if not ('OPENVPN' in packet):
                 continue
             try:
                 self.timestamps.append(float(packet.sniff_timestamp))
                 self.ovpn_data_sizes.append(int(packet.openvpn.data.size))
                 self.packet_sizes.append(int(packet.length))
+                self.ttl.append(int(packet.ip.ttl))
             except Exception as e:
                 fails += 1
         
@@ -173,3 +175,7 @@ class FeaturesCalculator:
             worksheet.write(row, col, key.value); col += 1
             worksheet.write(row, col, val[1]); col += 1
             worksheet.write(row, col, val[0]); col += 1
+
+        # IP TTL values 
+        col += 1
+        worksheet.write(row, col, max(self.ttl)) 

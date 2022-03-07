@@ -30,6 +30,9 @@ from selenium.webdriver.edge.service import Service as EdgeService
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class Crawler(object):
@@ -268,7 +271,7 @@ def get_driver(args):
     driver = None
 
     if args.browser == "chrome":
-        chromedriverpath = os.path.join(os.pardir, f"webcrawlers/{args.os}/webdrivers", "chromedriver")
+        chromedriverpath = os.path.join(args.drivers_dir, "chromedriver")
         if args.os == "windows":
             chromedriverpath += ".exe"
         service = ChromeService(chromedriverpath)
@@ -279,7 +282,7 @@ def get_driver(args):
         driver = webdriver.Chrome(options=options, service=service)
 
     elif args.browser == "edge":
-        edgedriverpath = os.path.join(os.pardir, f"webcrawlers/{args.os}/webdrivers", "msedgedriver")
+        edgedriverpath = os.path.join(args.drivers_dir, "msedgedriver")
         if args.os == "windows":
             edgedriverpath += ".exe"
         service = EdgeService(edgedriverpath)
@@ -292,7 +295,7 @@ def get_driver(args):
         driver = webdriver.Edge(options=options, service=service)
     
     elif args.browser == "firefox":
-        firefoxdriverpath = os.path.join(os.pardir, f"webcrawlers/{args.os}/webdrivers", "geckodriver")
+        firefoxdriverpath = os.path.join(args.drivers_dir, "geckodriver")
         if args.os == "windows":
             firefoxdriverpath += ".exe"
         service = FirefoxService(firefoxdriverpath)
@@ -302,6 +305,7 @@ def get_driver(args):
         # options.headless = True # do not open browser GUI
         driver = webdriver.Firefox(options=options, service=service)
 
+    driver.maximize_window()
     return driver
 
 
@@ -314,6 +318,9 @@ def main():
     parser.add_argument('--browser', metavar='-b', required=True, type=str, help='which browser')
     parser.add_argument('--os', metavar='-o', required=True, type=str, help='which OS')
     parser.add_argument('--interface', metavar='-i', required=True, type=str, help='which interface')
+    parser.add_argument('--traffic', metavar='-i', required=True, type=str, help='which traffic')
+    parser.add_argument('--drivers_dir', metavar='-i', required=True, type=str, help='where drivers')
+    parser.add_argument('--output_dir', metavar='-i', required=True, type=str, help='where output')
     args = parser.parse_args()
 
     level = getattr(logging, args.log.upper())
@@ -330,18 +337,33 @@ def main():
 
     # Capture
     filter = "udp port 1194"
-    capture_process = subprocess.Popen(args=["tshark", "-i", args.interface, "-w", f"output/{args.os}-{args.browser}-browsing-{int(time.time())}.pcapng", "-f", filter])
+    capture_process = subprocess.Popen(args=["tshark", "-i", args.interface, "-w", f"{args.output_dir}/{args.os}-{args.browser}-{args.traffic}-{int(time.time())}.pcapng", "-f", filter])
     while capture_process.poll() is not None: # while process not alive yet
         print("tshark not started yet..")
 
-    # Start
-    crawler.crawl()
+    # browsing
+    if args.traffic == "browsing":
+        crawler.crawl()
+    # streaming yt
+    elif "youtube" in args.traffic:
+        driver.get("https://youtu.be/knsnQzDVpcI")  
+        # bypass cookie consent 
+        consent_button_xpath = '/html/body/ytd-app/ytd-consent-bump-v2-lightbox/tp-yt-paper-dialog/div[4]/div[2]/div[5]/div[2]/ytd-button-renderer[2]/a'
+        consent = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, consent_button_xpath)))
+        consent = driver.find_element_by_xpath(consent_button_xpath)
+        consent.click()
+        time.sleep(args.timeout)
+    # streaming twitch
+    else:
+        driver.get("https://www.twitch.tv/topgeartv")  
+        time.sleep(args.timeout)
 
     # terminate capturing
     capture_process.terminate()
     while capture_process.poll() is None: # while process alive
         print("tshark not terminated yet..")
         time.sleep(1)
+
     driver.quit()
 
 
