@@ -2,7 +2,7 @@
 $chrome = "chrome"
 $firefox = "firefox"
 $edge = "edge"
-$browsers = $chrome, $firefox #, $edge
+$browsers = $edge #$chrome, $firefox #, $edge
 
 # Timeout (s)
 $timeout = 3600
@@ -36,4 +36,6 @@ python $script_path --config $config_path --timeout $timeout --browser $b --os w
 
 }
 
-Read-Host -Prompt "Done.. Press Enter to exit"
+python $script_path --config $config_path --timeout $timeout --browser firefox --os windows --interface WiFi --traffic streaming_youtube --output_dir $output_path --drivers_dir $drivers_path | Out-Null
+
+# Read-Host -Prompt "Done.. Press Enter to exit"

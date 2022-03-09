@@ -10,8 +10,7 @@ from datetime import datetime
 # Handling CLI arguments #
 
 try:
-    OS = sys.argv[1] # "windows", "linux"
-    DIR = sys.argv[2] 
+    DIR = sys.argv[1] 
 except:
     print("Specify OS and DIR")
     exit(0)
@@ -20,8 +19,8 @@ except:
 # constants
 MTU = 1500
 plot_index = 1
-PLOT_ROWS = 3  # 1 row for each browser type
-PLOT_COLS = 3    # 1 col for each trace 
+PLOT_ROWS = 1  # 1 row for each os
+PLOT_COLS = 3  # 1 col for each browser 
 
 
 def processTimestamps(timestamps):
@@ -48,22 +47,25 @@ def session_2d_histogram(timestamps, sizes, binSize, vmax, savePath, plot=False)
     
     # fill subplot
     c = plt.pcolormesh(xedges, yedges, H, vmax=vmax)
-    plt.colorbar(c)
+    #plt.colorbar(c)
     plt.xlim(0, MTU)
     plt.ylim(0, MTU)
     plt.xlabel("Normalized arrival time")
     plt.ylabel("Packet size (bytes)")
     plt.set_cmap('binary')
-    title = savePath.split('/')[-1].split('.')[0]
+    title = "Google Chrome"
+    if "edge" in savePath:
+        title = "Microsoft Edge"
+    elif "firefox" in savePath:
+        title = "Mozilla Firefox"
     plt.title(title)
     # plt.savefig(savePath)
 
 
 def visualize_trace(inFile, outFile):
     # read capture file
-    print(inFile)
     capture = pyshark.FileCapture(inFile)
-    capture.set_debug()
+    #capture.set_debug()
     # get timestamps and sizes
     timestamps = []
     sizes = []
@@ -82,28 +84,30 @@ def visualize_trace(inFile, outFile):
     timestamps = processTimestamps(timestamps)
     
     # create 2d hist and save
-    session_2d_histogram(np.array(timestamps, dtype=float), np.array(sizes, dtype=int), binSize=20, vmax=5, savePath=outFile, plot=True)
+    session_2d_histogram(np.array(timestamps, dtype=float), np.array(sizes, dtype=int), binSize=20, vmax=5, savePath=inFile, plot=True)
 
 
 # specify dirs
-traces_dir = os.path.join(os.getcwd(), OS + "/traces/" + DIR)
-out_dir = os.path.join(os.getcwd(), OS + "/visualizations")
+traces_windows_dir = os.path.join(os.getcwd(), "windows/traces/" + DIR)
+traces_linux_dir = os.path.join(os.getcwd(), "linux/traces/" + DIR)
+out_dir = os.getcwd()
 
-# figsize = (num traces per browser * 8, num browsers * 6)
-plt.figure(figsize=(24,18))
+# figsize = (num traces per os * 8, num os * 6)
+plt.figure(figsize=(24,6))
 
 # visualize every trace file 
-filenames = os.listdir(traces_dir)
+filenames = []
+for browser in ["chrome", "edge", "firefox"]:
+    #filenames.append(os.path.join(traces_windows_dir, browser + "2.pcapng"))
+    filenames.append(os.path.join(traces_linux_dir, browser + "2.pcapng"))
 print(filenames)
 
 for filename in sorted(filenames):
     print(f"Handling {filename}")
-    # get paths
-    filePath = os.path.join(traces_dir, filename)
-    outPath = os.path.join(out_dir, filename.split('.')[0] + ".png")
+
     # visualize trace
-    visualize_trace(filePath, outPath)
+    visualize_trace(filename, "")
 
 # plt.suptitle("Comparison of web browsers and operating systems")
-plt.savefig(os.path.join(out_dir, f"{DIR}_firefox_chrome_edge_1500x1500_5.png"))
+plt.savefig(os.path.join(out_dir, "flowpic_linux_browsing2.png"), bbox_inches='tight')
 # plt.show()

@@ -36,13 +36,6 @@ PAUSE_INTERVAL = 2
 def webpage_actions(driver):
     driver.get("https://www.uhasselt.be")
     time.sleep(PAUSE_INTERVAL)
-    driver.find_element(By.XPATH, '//a[@href="/UH/nl/InfoVoor/studenten-en-doctorandi.html"]').click()
-    time.sleep(PAUSE_INTERVAL)
-    #driver.find_element(By.XPATH, '//a[@href="/UH/nl/InfoVoor/TS1.html"]').click()
-    driver.find_element(By.XPATH, '//a[@href="/"]').click()
-    time.sleep(PAUSE_INTERVAL) 
-    driver.find_element(By.XPATH, '//a[@href="/UH/nl/InfoVoor/InfoVoor-Sollicitanten.html"]').click()
-    time.sleep(PAUSE_INTERVAL) 
 
 
 # Chrome
