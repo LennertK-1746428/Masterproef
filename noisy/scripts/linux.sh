@@ -3,8 +3,8 @@
 # Browsers
 chrome="chrome"
 firefox="firefox"
-#edge="edge"
-browsers=( "$chrome" "$firefox" ) #"$edge" )
+edge="edge"
+browsers=( "$edge" )
 
 # Timeout (s)
 timeout=3600
