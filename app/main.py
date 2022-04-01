@@ -1,9 +1,11 @@
 import tkinter as tk
 import tkinter.font as tkFont
+from tkinter import IntVar
 import threading
-from predictor_thread import *
-from config import *
+from app.predictor_thread import *
+from app.config import *
 import socket
+import time
 hostname = socket.gethostname()
 local_ip = socket.gethostbyname(hostname)
 
@@ -13,7 +15,7 @@ capture_thread = None
 
 # init window
 window = tk.Tk()
-window.title("VPN Fingerprinting App")
+window.title("OpenVPN Fingerprinting App")
 window.geometry("1000x600")
 window.resizable(0, 0)  # fixed size
 
@@ -56,6 +58,12 @@ pred_interval_entry = tk.Entry(master=info_frame, font=label_font)
 pred_interval_entry.insert(0, "60")
 pred_interval_label.pack(side=tk.TOP, anchor="nw", padx=20, pady=(15, 5))
 pred_interval_entry.pack(side=tk.TOP, anchor="nw", padx=20, pady=5)
+
+# Use IP TTL for OS prediction
+ttl_checkbox_value = IntVar()
+ttl_checkbox_value.set(1)
+ttl_checkbox = tk.Checkbutton(master=info_frame, font=label_font, text="Use IP TTL", variable=ttl_checkbox_value)
+ttl_checkbox.pack(side=tk.TOP, anchor="nw", padx=15, pady=(15, 5))
 
 
 ##########################################
@@ -130,6 +138,10 @@ prediction_frame.bind("<Configure>", lambda event, canvas=canvas: on_configure(c
 # prediction_frame.pack_propagate(0)  # do NOT shrink to fit child elements exactly
 # prediction_frame.pack(fill=tk.BOTH, expand=True)
 
+#####################
+# Prediction thread #
+#####################
+
 def insert_prediction_label(text):
     global prediction_frame
     label = tk.Label(master=prediction_frame, text=text, font=label_font)
@@ -142,7 +154,7 @@ def start_capture_thread():
         capture_thread.join()
     capture_thread = None
     capture_thread = StoppableThread(target=predict_traffic, args=(insert_prediction_label, ip_entry.get(), iface_entry.get(), int(server_entry.get()),
-        int(pred_interval_entry.get()),))
+        int(pred_interval_entry.get()), int(ttl_checkbox_value.get()),))
     capture_thread.start()
 
 def stop_capture_thread():

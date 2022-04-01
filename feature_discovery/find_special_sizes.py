@@ -1,8 +1,8 @@
 import os
 from app.features_calculator import FeaturesCalculator
 
-OUT_FILE = open("features_special_sizes_detection.txt", "w")
-all_traces_dirs = ["webcrawlers/linux/traces/browsing", "webcrawlers/linux/traces/streaming_quic", "webcrawlers/linux/traces/streaming_http", "webcrawlers/windows/traces/browsing", "webcrawlers/windows/traces/streaming_quic", "webcrawlers/windows/traces/streaming_http"] # ["android/traces", "linux/traces/browsing", "linux/traces/streaming", "windows/traces/browsing", "windows/traces/streaming"]
+OUT_FILE = open("dataset_splitted__special_sizes_detection.txt", "w")
+all_traces_dirs = ['C:\\Users\\lenne\\Documents\\VPN_dataset_splitted'] # ["webcrawlers/linux/traces/browsing", "webcrawlers/linux/traces/streaming_quic", "webcrawlers/linux/traces/streaming_http", "webcrawlers/windows/traces/browsing", "webcrawlers/windows/traces/streaming_quic", "webcrawlers/windows/traces/streaming_http"] 
 sizes_dict = {}
 
 for traces_dir in all_traces_dirs:
@@ -15,7 +15,10 @@ for traces_dir in all_traces_dirs:
     print(files)
 
     # for every trace, calculate and output features
+    i=0
     for f in files:
+        i+=1
+        print(i)
 
         filePath = os.path.join(files_dir, f)
 
@@ -70,13 +73,13 @@ def check_unique(key, vals, options):
             unique = False
             break
     
-    if unique and len(vals) >= 6:
+    if unique: # and len(vals) >= 3:
         OUT_FILE.write(f"{key} : {temp}, {len(vals)}x\n" )
 
 
 for key,vals in sizes_dict.items():
     vals = remove_dup(vals)
-    check_unique(key, vals, ["browsing", "streaming_http", "streaming_quic"])      # traffic
+    check_unique(key, vals, ["browsing", "streaming_twitch", "streaming_youtube"])      # traffic
     check_unique(key, vals, ["firefox", "edge", "chrome"])  # browser
     check_unique(key, vals, ["windows", "linux"])      # os
 

@@ -17,7 +17,7 @@ class FeaturesCalculator:
         self.ia_times = []
         self.ttl = []
         self.duration_minutes = float(0)
-    
+
     
     def __calc_ia_times(self):
         """ Calculate interarrival times based on timestamps """
@@ -49,10 +49,11 @@ class FeaturesCalculator:
         max_ = max(lst)
         mean_ = np.mean(lst)
         std_ = np.std(lst)
+        unique_sizes = len(set(lst))
         occurrence_counts = Counter(lst)
         most_frequent = occurrence_counts.most_common(3)
         most_frequent = [(key, self.__normalize_count(val), self.__percentage(val, len(lst))) for (key, val) in most_frequent]
-        return min_, max_, mean_, std_, most_frequent
+        return min_, max_, mean_, std_, unique_sizes, most_frequent
     
 
     def __calc_ovpn_special_sizes_information(self):
@@ -100,7 +101,7 @@ class FeaturesCalculator:
         # Duration in minutes 
         norm_timestamps = np.array(self.timestamps) - self.timestamps[0]
         duration_seconds = float(norm_timestamps[-1])
-        self.duration_minutes = duration_seconds / 60
+        self.duration_minutes = 1 # duration_seconds / 60
 
         # close capture
         self.capture.close()
@@ -115,14 +116,18 @@ class FeaturesCalculator:
         packets_per_min = self.__normalize_count(len(self.packet_sizes))
 
         # OpenVPN data sizes general
-        min_size, max_size, mean_size, std_size, occ_sizes = self.__calc_general_list_information(self.ovpn_data_sizes)
+        min_size, max_size, mean_size, std_size, unique_sizes, occ_sizes = self.__calc_general_list_information(self.ovpn_data_sizes)
         
         # OpenVPN data special sizes
         special_sizes = self.__calc_ovpn_special_sizes_information()
 
-        return packets_per_min, min_size, max_size, occ_sizes, special_sizes
+        return packets_per_min, min_size, max_size, mean_size, std_size, unique_sizes, occ_sizes, special_sizes
 
-        
+    
+    def return_max_ttl(self):
+        return max(self.ttl)
+
+
     def write_features_txt(self, outstream):
         """  Calculate and write features to TXT """
 

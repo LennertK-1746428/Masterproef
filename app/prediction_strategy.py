@@ -1,4 +1,4 @@
-from config import *
+from app.config import *
 
 def predict_strategy_1_OUTDATED(packet_count, min_size, max_size, occ_size):
     prediction = ""
@@ -61,6 +61,8 @@ def predict_strategy_2_OUTDATED(packet_count, min_size, max_size, occ_size):
     return f"{OS_prediction} | {browser_prediction} | {traffic_prediction}"
 
 
+
+
 def process_scores(scores):
 
     # special case = all 0 --> unknown
@@ -79,6 +81,8 @@ def process_scores(scores):
             key_string += f" OR {key.value}"
 
     # Some special cases of results 
+    if OperatingSystem.WINDOWS.value in key_string and OperatingSystem.LINUX.value in key_string:
+        key_string = "Unknown"
     if Browser.EDGE.value in key_string and Browser.CHROME.value in key_string:
         key_string = "Chromium based"
     if Traffic.STREAMING_HTTP.value in key_string and Traffic.STREAMING_QUIC.value in key_string:
@@ -146,7 +150,19 @@ def predict_traffic(packets_per_min, min_size, max_size, occ_sizes, special_size
     return f"Traffic: {result}"
 
 
-def predict_OS(packets_per_min, min_size, max_size, occ_sizes, special_sizes):
+def predict_OS(packets_per_min, min_size, max_size, max_ttl, occ_sizes, special_sizes):
+
+    #######
+    # TTL #
+    #######
+
+    if max_ttl is not None:
+        if max_ttl > 64:
+            return "OS: Windows"
+        else:
+            return "OS: Linux"
+
+
     scores = {key: 0 for key in OperatingSystem}
     
     #######
@@ -219,10 +235,10 @@ def predict_browser(packets_per_min, min_size, max_size, occ_sizes, special_size
     return f"Browser: {process_scores(scores)}"
 
 
-def predict(packets_per_min, min_size, max_size, occ_sizes, special_sizes):
+def predict(packets_per_min, min_size, max_size, max_ttl, occ_sizes, special_sizes):
     
     traffic = predict_traffic(packets_per_min, min_size, max_size, occ_sizes, special_sizes)
-    OS = predict_OS(packets_per_min, min_size, max_size, occ_sizes, special_sizes)
+    OS = predict_OS(packets_per_min, min_size, max_size, max_ttl, occ_sizes, special_sizes)
     browser = predict_browser(packets_per_min, min_size, max_size, occ_sizes, special_sizes)
 
     return f"{OS} | {browser} | {traffic}"
