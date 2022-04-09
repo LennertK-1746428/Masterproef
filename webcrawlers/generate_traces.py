@@ -66,7 +66,7 @@ def flush_dns():
 OUTPUT_DIR = os.path.join(os.getcwd(), OS + "/traces/streaming_quic")
 
 # Edge
-for i in range(3):
+for i in range(3,6):
     # flush dns
     flush_dns()
     # init driver
@@ -81,6 +81,7 @@ for i in range(3):
     capture_traffic(driver, INTERFACE, FILTER, output_file, streaming_quic=True)
     driver.quit()
 
+exit(0)
 
 # Firefox
 for i in range(3):

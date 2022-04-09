@@ -8,6 +8,6 @@ SERVER_PORT = 1194
 IP = "192.168.0.145"
 
 # The browser you will be using during the capture
-BROWSER = "firefox"
+BROWSER = "edge"
 
 OS = "windows"

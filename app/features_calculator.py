@@ -166,7 +166,7 @@ class FeaturesCalculator:
         col += 1
 
         # OpenVPN data sizes
-        min_size, max_size, mean_size, std_size, occ_sizes = self.__calc_general_list_information(self.ovpn_data_sizes)
+        min_size, max_size, mean_size, std_size, unique_sizes, occ_sizes = self.__calc_general_list_information(self.ovpn_data_sizes)
         special_sizes = self.__calc_ovpn_special_sizes_information()
         
         worksheet.write(row, col, min_size); col += 1

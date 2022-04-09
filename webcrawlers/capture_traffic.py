@@ -52,16 +52,16 @@ def streaming_quic_traffic(driver, iface, filter, output_file):
     time.sleep(5)   # make sure streaming has already begun
     
     # start capturing when already streaming
-    #capture_process = subprocess.Popen(args=["tshark", "-i", iface, "-w", output_file, "-f", filter])
+    capture_process = subprocess.Popen(args=["tshark", "-i", iface, "-w", output_file, "-f", filter])
 
     # capture streaming
     time.sleep(STREAMING_INTERVAL)
 
     # terminate capturing
-    # capture_process.terminate()
-    # while capture_process.poll() is None: # while process alive
-    #     print("tshark not terminated yet..")
-    #     time.sleep(1)
+    capture_process.terminate()
+    while capture_process.poll() is None: # while process alive
+        print("tshark not terminated yet..")
+        time.sleep(1)
 
 
 def streaming_http_traffic(driver, iface, filter, output_file):
