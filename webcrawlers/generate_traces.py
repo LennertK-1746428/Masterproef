@@ -66,7 +66,7 @@ def flush_dns():
 OUTPUT_DIR = os.path.join(os.getcwd(), OS + "/traces/streaming_quic")
 
 # Edge
-for i in range(3,6):
+for i in range(10,11):
     # flush dns
     flush_dns()
     # init driver

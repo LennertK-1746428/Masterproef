@@ -1,5 +1,5 @@
 # Main interface = the interface on which encrypted VPN traffic (OpenVPN packets) will be sent to the VPN server
-IFACE = "WiFi"
+IFACE = "wlp0s20f3"
 
 # The server port to which VPN traffic will be forwarded (required for capture filter). 1194 should be the default port
 SERVER_PORT = 1194
@@ -10,4 +10,4 @@ IP = "192.168.0.145"
 # The browser you will be using during the capture
 BROWSER = "edge"
 
-OS = "windows"
+OS = "linux"
