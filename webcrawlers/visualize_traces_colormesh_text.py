@@ -10,9 +10,10 @@ from datetime import datetime
 # Handling CLI arguments #
 
 try:
-    DIR = sys.argv[1] 
+    DIR = sys.argv[1]
+    TRAFFIC = sys.argv[2]
 except:
-    print("Specify OS and DIR")
+    print("Specify DIR and Traffic type")
     exit(0)
 
 
@@ -53,11 +54,11 @@ def session_2d_histogram(timestamps, sizes, binSize, vmax, savePath, plot=False)
     plt.xlabel("Normalized arrival time")
     plt.ylabel("Packet size (bytes)")
     plt.set_cmap('binary')
-    title = "Google Chrome"
+    title = f"Google Chrome"
     if "edge" in savePath:
-        title = "Microsoft Edge"
+        title = f"Microsoft Edge"
     elif "firefox" in savePath:
-        title = "Mozilla Firefox"
+        title = f"Mozilla Firefox"
     plt.title(title)
     # plt.savefig(savePath)
 
@@ -93,13 +94,13 @@ traces_linux_dir = os.path.join(os.getcwd(), "linux/traces/" + DIR)
 out_dir = os.getcwd()
 
 # figsize = (num traces per os * 8, num os * 6)
-plt.figure(figsize=(24,6))
+plt.figure(figsize=(18,4))
 
 # visualize every trace file 
 filenames = []
 for browser in ["chrome", "edge", "firefox"]:
-    #filenames.append(os.path.join(traces_windows_dir, browser + "2.pcapng"))
-    filenames.append(os.path.join(traces_linux_dir, browser + "2.pcapng"))
+    filenames.append(os.path.join(traces_windows_dir, browser + "2.pcapng"))
+    #filenames.append(os.path.join(traces_linux_dir, browser + "2.pcapng"))
 print(filenames)
 
 for filename in sorted(filenames):
@@ -109,5 +110,5 @@ for filename in sorted(filenames):
     visualize_trace(filename, "")
 
 # plt.suptitle("Comparison of web browsers and operating systems")
-plt.savefig(os.path.join(out_dir, "flowpic_linux_browsing2.png"), bbox_inches='tight')
+plt.savefig(os.path.join(out_dir, "flowpic_windows_yt.png"), bbox_inches='tight')
 # plt.show()

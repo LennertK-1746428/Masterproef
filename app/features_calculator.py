@@ -87,7 +87,7 @@ class FeaturesCalculator:
         self.ovpn_data_sizes = []
         self.timestamps = []
         fails = 0
-        for packet in self.capture: #._packets:
+        for packet in self.capture._packets:
             if not ('OPENVPN' in packet):
                 continue
             try:
@@ -184,3 +184,7 @@ class FeaturesCalculator:
         # IP TTL values 
         col += 1
         worksheet.write(row, col, max(self.ttl)) 
+
+        # number of unique sizes 
+        col += 1
+        worksheet.write(row, col, unique_sizes) 

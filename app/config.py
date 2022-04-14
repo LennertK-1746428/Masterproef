@@ -53,9 +53,8 @@ def get_packet_type(size):
 
 class Traffic(Enum):
     BROWSING = "Browsing"
-    STREAMING_QUIC = "Streaming QUIC"
-    STREAMING_HTTP = "Streaming HTTP"
-    UPLOAD = "Uploading"
+    STREAMING_QUIC = "YouTube"
+    STREAMING_HTTP = "Twitch"
 
 class OperatingSystem(Enum):
     WINDOWS = "Windows"

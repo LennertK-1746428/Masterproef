@@ -41,7 +41,7 @@ def predict_traffic(insert_label, ip, iface, server_port, interval, use_ttl):
         stop_time = datetime.datetime.now().strftime("%H:%M:%S")
         len_captured = len([p for p in capture._packets])
 
-        if __debug__: print(f"Finished sniffing.. {len_captured} packets captured {threading.current_thread().stopped()}")
+        if __debug__: print(f"Finished sniffing.. {len_captured} packets captured")
 
         # if not enough traffic --> too idle to make predictions 
         if len_captured < 500:
@@ -59,8 +59,8 @@ def predict_traffic(insert_label, ip, iface, server_port, interval, use_ttl):
         
         # get features
         features_calc = FeaturesCalculator(capture=capture)
-        packets_per_min, min_size, max_size, occ_sizes, special_sizes = features_calc.return_features()
-        if __debug__: print(f"Packets/min: {packets_per_min}\nMin: {min_size}, Max: {max_size}\nMost frequent: {occ_sizes}\nSpecial: {special_sizes}")
+        packets_per_min, min_size, max_size, mean_size, std_size, unique_sizes, occ_sizes, special_sizes = features_calc.return_features()
+        #if __debug__: print(f"Packets/min: {packets_per_min}\nMin: {min_size}, Max: {max_size}\nMost frequent: {occ_sizes}\nSpecial: {special_sizes}")
         
         # do predictions based on features
         prediction = None 
