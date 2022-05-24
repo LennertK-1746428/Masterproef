@@ -9,7 +9,6 @@ traces = os.listdir(traces_dir)
 features = []
 predictions = []
 count = 0
-skip_features = 0
 skip_prediction = 0
 
 print(f"Total: {len(traces)}")
@@ -48,8 +47,8 @@ def get_classifications(s):
     elif "FIREFOX" in s: browser = browser_classify["firefox"]
     else: browser = browser_classify["unknown"]
 
-    if "HTTP" in s: traffic = traffic_classify["streaming_twitch"]
-    elif "QUIC" in s: traffic = traffic_classify["streaming_youtube"]
+    if "TWITCH" in s: traffic = traffic_classify["streaming_twitch"]
+    elif "YOUTUBE" in s: traffic = traffic_classify["streaming_youtube"]
     elif "BROWSING" in s: traffic = traffic_classify["browsing"]
     else: traffic = traffic_classify["unknown"]
 
@@ -73,20 +72,21 @@ for t in traces:
     browser = splitted[1]
     traffic = splitted[2]
 
-    #packets_per_min, min_size, max_size, occ_sizes, special_sizes = features_calc.return_features()
-
     try: 
-        features_calc = FeaturesCalculator(trace=in_path)
+        # get trace features
+        capture = pyshark.FileCapture(in_path, display_filter="ip.src == 192.168.0.145")  # prediction only considers client --> server
+        features_calc = FeaturesCalculator(capture=capture)
         packets_per_min, min_size, max_size, mean_size, std_size, unique_sizes, occ_sizes, special_sizes = features_calc.return_features()
+        max_ttl = features_calc.return_max_ttl()
 
         # skip if too few packets 
         if packets_per_min <= 50:
-            print("Features: Too few packets, skipping..")
-            skip_features += 1
+            skip_prediction += 1
+            print(f"Too few packets, skipping.. {skip_prediction} skipped")
             continue 
 
         # create features entry for csv
-        features_item = [operating_system, browser, traffic, packets_per_min, min_size, max_size, mean_size, std_size, unique_sizes]
+        features_item = [operating_system, browser, traffic, packets_per_min, min_size, max_size, mean_size, std_size, unique_sizes, max_ttl]
         for i in occ_sizes:
             features_item.append(i[0])
             features_item.append(i[1])
@@ -95,39 +95,36 @@ for t in traces:
             features_item.append(i[1])
         features.append(features_item)
 
-        # predict
-        features_calc = None 
-        capture = pyshark.FileCapture(in_path, display_filter="ip.src == 192.168.0.145")  # prediction only considers client --> server
-        features_calc = FeaturesCalculator(capture=capture)
-        packets_per_min, min_size, max_size, mean_size, std_size, unique_sizes, occ_sizes, special_sizes = features_calc.return_features()
-
-        # skip if too few packets 
-        if packets_per_min <= 50:
-            print("Prediction: Too few packets, skipping..")
-            skip_prediction += 1
-            continue 
-
-        prediction = predict(packets_per_min, min_size, max_size, occ_sizes, special_sizes)
+        # predict and create prediction entry for csv
+        prediction = predict(packets_per_min, min_size, max_size, None, occ_sizes, special_sizes)
         OS_predict, browser_predict, traffic_predict = get_classifications(prediction)
         predictions_item = [os_classify[operating_system], OS_predict, '', browser_classify[browser], browser_predict, '', traffic_classify[traffic], traffic_predict]
         predictions.append(predictions_item)
 
+        print(f"{t} | {prediction} | {packets_per_min}")
+        
     except Exception as e:
         print(e)
 
-with open("dataset_splitted_features.csv", "w", newline="") as f1:
+with open("dataset_splitted_features_sender_only.csv", "w", newline="") as f1:
     writer = csv.writer(f1)
     writer.writerows(features)
 
-with open("dataset_splitted_predictions_manual.csv", "w", newline="") as f2:
+with open("dataset_splitted_predictions_manual_new_pred_strategy.csv", "w", newline="") as f2:
     writer = csv.writer(f2)
     writer.writerows(predictions)
 
-print(f"Features: Skipped {skip_features} traces, leaving {len(traces)} - {skip_features} = {len(traces) - skip_features} included")
-print(f"Predictions: Skipped {skip_prediction} traces, leaving {len(traces)} - {skip_prediction} = {len(traces) - skip_prediction} included")
+
+print(f"Skipped {skip_prediction} traces, {len(traces)} - {skip_prediction} = {len(traces) - skip_prediction} used")
 
 
 """
+FIRST RUN
 Features: Skipped 76 traces, leaving 1294 - 76 = 1218 included
 Predictions: Skipped 29 traces, leaving 1294 - 29 = 1265 included
+"""
+
+"""
+SECOND RUN
+Predictions: Skipped 100 traces, leaving 1113 - 100 = 1013 included
 """

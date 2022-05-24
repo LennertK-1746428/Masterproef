@@ -32,7 +32,7 @@ info_frame = tk.Frame(master=window, width=400, height=500, highlightbackground=
 info_frame.pack(fill=tk.Y, side=tk.LEFT)
 
 # IP label
-ip_label = tk.Label(master=info_frame, text="Local IP address", font=label_font)
+ip_label = tk.Label(master=info_frame, text="Source IP address", font=label_font)
 ip_entry = tk.Entry(master=info_frame, font=label_font)
 ip_entry.insert(0, local_ip)
 ip_label.pack(side=tk.TOP, anchor="nw", padx=20, pady=5)    # padx = (left, right), pady = (top, bottom)
@@ -46,7 +46,7 @@ iface_label.pack(side=tk.TOP, anchor="nw", padx=20, pady=(15, 5))
 iface_entry.pack(side=tk.TOP, anchor="nw",  padx=20, pady=5)
 
 # Server port
-server_label = tk.Label(master=info_frame, text="Server port", font=label_font)
+server_label = tk.Label(master=info_frame, text="VPN server port", font=label_font)
 server_entry = tk.Entry(master=info_frame, font=label_font)
 server_entry.insert(0, "1194")
 server_label.pack(side=tk.TOP, anchor="nw", padx=20, pady=(15, 5))

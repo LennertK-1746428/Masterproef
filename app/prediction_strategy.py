@@ -38,25 +38,23 @@ def predict_traffic(packets_per_min, min_size, max_size, occ_sizes, special_size
     # TLS Client Hello #
     ####################
 
-    # TLS CLIENT HELLO frequent --> Browsing, else Streaming
-    if (special_sizes[PacketTypes.TLS_CLIENT_HELLO_OPTIONS][0] + special_sizes[PacketTypes.TLS_CLIENT_HELLO][0]) >= 20:
+    # TLS CLIENT HELLO frequent --> Browsing
+    if (special_sizes[PacketTypes.TLS_CLIENT_HELLO_OPTIONS][0] + special_sizes[PacketTypes.TLS_CLIENT_HELLO][0]) >= 15:
         if __debug__: print("TLS Client Hello occurs frequently --> Browsing")
         scores[Traffic.BROWSING] += 1
-    else: 
-        if __debug__: print("Few TLS Client Hello")
-
-        # TCP ACKs >= 70% --> Twitch
-        if (special_sizes[PacketTypes.TCP_ACK][1] + special_sizes[PacketTypes.TCP_ACK_OPTIONS][1]) >= 70:
+    else:
+        # TCP ACKs >= 50% --> Twitch
+        if (special_sizes[PacketTypes.TCP_ACK][1] + special_sizes[PacketTypes.TCP_ACK_OPTIONS][1]) >= 50:
             if __debug__: print("High number of TCP ACKs --> Twitch")
             scores[Traffic.STREAMING_HTTP] += 1
         # QUIC ACKs >= 30% --> YouTube
-        elif special_sizes[PacketTypes.QUIC][1] >= 30:
+        if special_sizes[PacketTypes.QUIC][1] >= 30:
             if __debug__: print("High number of QUIC ACKs --> YouTube")
             scores[Traffic.STREAMING_QUIC] += 1
-        else:
+        # No YouTube nor Twitch indication --> Browsing
+        if ((special_sizes[PacketTypes.TCP_ACK][1] + special_sizes[PacketTypes.TCP_ACK_OPTIONS][1]) < 50) and (special_sizes[PacketTypes.QUIC][1] < 30):
             if __debug__: print("Low number of TCP ACKs and low number of QUIC ACKs --> Browsing")
             scores[Traffic.BROWSING] += 1
-
 
     result = process_scores(scores)
 
@@ -72,6 +70,13 @@ def predict_traffic(packets_per_min, min_size, max_size, occ_sizes, special_size
     return f"Traffic: {result}"
 
 
+def predict_OS_max_ttl(max_ttl):
+    if max_ttl > 64:
+        return "OS: Windows"
+    else:
+        return "OS: Linux"
+
+
 def predict_OS(packets_per_min, min_size, max_size, max_ttl, occ_sizes, special_sizes):
 
     #######
@@ -79,14 +84,21 @@ def predict_OS(packets_per_min, min_size, max_size, max_ttl, occ_sizes, special_
     #######
 
     if max_ttl is not None:
-        if max_ttl > 64:
-            return "OS: Windows"
-        else:
-            return "OS: Linux"
-
+        return predict_OS_max_ttl(max_ttl)
 
     scores = {key: 0 for key in OperatingSystem}
     
+    ###################
+    # TCP ACK Options #
+    ###################
+
+    # at least 15% TCP ACK with options --> Linux
+    if special_sizes[PacketTypes.TCP_ACK_OPTIONS][1] >= 15:
+        scores[OperatingSystem.LINUX] += 1
+    # at least 70% TCP ACK without options --> Linux
+    if special_sizes[PacketTypes.TCP_ACK][1] >= 70:
+        scores[OperatingSystem.WINDOWS] += 1
+
     #######
     # TLS #
     #######
@@ -96,19 +108,10 @@ def predict_OS(packets_per_min, min_size, max_size, max_ttl, occ_sizes, special_
         if __debug__: print("High number of TLS Client Hello with option --> Linux")
         scores[OperatingSystem.LINUX] += 1
     # At least 20 TLS CLIENT HELLO WITH OPTIONS --> Windows
-    elif special_sizes[PacketTypes.TLS_CLIENT_HELLO][0] >= 20:
+    if special_sizes[PacketTypes.TLS_CLIENT_HELLO][0] >= 20:
         if __debug__: print("High number of TLS Client Hello without option--> Windows")
         scores[OperatingSystem.WINDOWS] += 1
 
-    #########################
-    # Packet Size Frequency #
-    #########################
-
-    top3 = set([occ_sizes[0][0], occ_sizes[1][0], occ_sizes[2][0]])
-
-    # Linux likes to send a lot of ACKs with 12B options 
-    if get_packet_type(occ_sizes[0][0]) == PacketTypes.TCP_ACK_OPTIONS or special_sizes[PacketTypes.TCP_ACK_OPTIONS][1] > 15 or set([72,92]).issubset(top3):
-        scores[OperatingSystem.LINUX] += 1
 
     return f"OS: {process_scores(scores)}"
 
