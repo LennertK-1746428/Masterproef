@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 import numpy as np 
 import csv
 
+# increase font size
+plt.rcParams.update({'font.size': 14})
+
 
 def plot_confusion_matrix(cm, classes,
                           normalize=False,
@@ -27,7 +30,7 @@ def plot_confusion_matrix(cm, classes,
     print(cm)
 
     plt.imshow(cm, interpolation='nearest', cmap=cmap)
-    plt.title(title)
+    # plt.title(title)
     plt.colorbar()
     tick_marks = np.arange(len(classes))
     plt.xticks(tick_marks, classes, rotation=45)
@@ -77,7 +80,7 @@ traffic_classify = {
     "unknown": 3
 }
 class_names_lst = [ ["windows", "linux"], ["chromium based", "firefox"], ["browsing", "youtube", "twitch"] ] 
-class_index = 0
+class_index = 2
 class_names = class_names_lst[class_index]
 y_test_true = []
 predictions = []
@@ -94,19 +97,19 @@ with open('CSVs/dataset_splitted_predictions_manual_new_pred_strategy.csv', newl
         #     predictions.append(OS_tuple[1])
 
         # OS with unknown
-        y_test_true.append(OS_tuple[0])
-        predictions.append(OS_tuple[1])
+        # y_test_true.append(OS_tuple[0])
+        # predictions.append(OS_tuple[1])
 
         # browser
         # y_test_true.append(browser_translate[browser_tuple[0]])
         # predictions.append(browser_translate[browser_tuple[1]])
 
         # traffic
-        # y_test_true.append(traffic_tuple[0])
-        # predictions.append(traffic_tuple[1])
+        y_test_true.append(traffic_tuple[0])
+        predictions.append(traffic_tuple[1])
 
 
-class_names += ['unknown']
+#class_names += ['unknown']
 
 # Compute confusion matrix
 cnf_matrix = confusion_matrix(y_test_true, predictions)
