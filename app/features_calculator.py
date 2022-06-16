@@ -87,7 +87,7 @@ class FeaturesCalculator:
         self.ovpn_data_sizes = []
         self.timestamps = []
         fails = 0
-        for packet in self.capture: #._packets: # use this extension only for live predictions
+        for packet in self.capture._packets: # use '._packets' only for live predictions
             if not ('OPENVPN' in packet):
                 continue
             try:

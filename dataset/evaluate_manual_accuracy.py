@@ -82,19 +82,8 @@ print(f"OS accuracy WITH unknown: {float(OS_acc['correct']) / float(OS_acc['corr
 print(f"Browser accuracy: {float(browser_acc['correct']) / float(browser_acc['correct'] + browser_acc['wrong'])}")
 print(f"Traffic accuracy: {float(traffic_acc['correct']) / float(traffic_acc['correct'] + traffic_acc['wrong'])}")
 
-"""
-FIRST RUN
-{'correct': 498, 'wrong': 47, 'unknown': 644}
-{'correct': 1046, 'wrong': 143, 'unknown': 0}
-{'correct': 978, 'wrong': 211, 'unknown': 0}
-OS accuracy WITHOUT unknown: 0.9137614678899083
-OS accuracy WITH unknown: 0.4188393608074012
-Browser accuracy: 0.87973086627418
-Traffic accuracy: 0.8225399495374264
-"""
 
 """
-SECOND RUN
 {'correct': 554, 'wrong': 15, 'unknown': 444}                                                                           
 {'correct': 891, 'wrong': 122, 'unknown': 0}                                                                            
 {'correct': 917, 'wrong': 96, 'unknown': 0}                                                                             

@@ -54,37 +54,12 @@ def plot_confusion_matrix(cm, classes,
     plt.savefig(fname, bbox_inches='tight', pad_inches=0.3)
 
 
-# get y_test_true and predictions
-OS_classify = {
-    "windows": 0,
-    "linux": 1,
-    "unknown": 2
-}
-browser_classify = {
-    "chrome": 0,
-    "edge": 1,
-    "chromium": 2,
-    "firefox": 3,
-    "unknown": 4
-}
-browser_translate = {  # make chrome, edge, chromium all point to same value 
-    0: 0,
-    1: 0,
-    2: 0,
-    3: 1
-}
-traffic_classify = {
-    "browsing": 0,
-    "streaming_youtube": 1,
-    "streaming_twitch": 2,
-    "unknown": 3
-}
-class_names_lst = [ ["windows", "linux"], ["chrome", "edge", "firefox"], ["browsing", "youtube", "twitch"] ] 
-class_index = 2
+class_names_lst = [ ["windows", "linux"], ["chromium based", "firefox"], ["twitch", "youtube", "browsing"] ] 
+class_index = 1
 class_names = class_names_lst[class_index]
 
 # Compute confusion matrix
-cnf_matrix = np.array([[71,1,2], [0,73,0], [2,0,67]])
+cnf_matrix = np.array([[65, 9], [19, 50]])
 np.set_printoptions(precision=2)
 
 # Plot non-normalized confusion matrix

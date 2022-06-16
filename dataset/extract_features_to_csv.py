@@ -119,12 +119,5 @@ print(f"Skipped {skip_prediction} traces, {len(traces)} - {skip_prediction} = {l
 
 
 """
-FIRST RUN
-Features: Skipped 76 traces, leaving 1294 - 76 = 1218 included
-Predictions: Skipped 29 traces, leaving 1294 - 29 = 1265 included
-"""
-
-"""
-SECOND RUN
 Predictions: Skipped 100 traces, leaving 1113 - 100 = 1013 included
 """
